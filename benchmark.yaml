@@ -1,7 +1,7 @@
 kind: Job
 apiVersion: batch/v1
 metadata:
-  name: pravega-benchmark-throughput-5  # better name the job with configs
+  name: pravega-benchmark-throughput-1  # better name the job with configs
 spec:
   parallelism: 1
   template:
@@ -10,7 +10,7 @@ spec:
       containers:
         - name: pravega-benchmark
           # You must set the image below to a valid value.
-          image: lemonieli/pravega-benchmark:0.7.0   # prefer to use your own image
+          image: jxndyy1219/pravega-benchmark:0.8.2   # prefer to use your own image
           imagePullPolicy: IfNotPresent
           resources:
             limits:
@@ -20,16 +20,16 @@ spec:
               cpu: "1"
               memory: "4Gi"
           args: [
-            "-controller", "tcp://10.109.28.148:9090", # get controller clusterIP: kb get svc --all-namespaces
-            #"-consumers", "10",
+            "-controller", "tcp://prvg-pravega-pravega-controller:9090", # get controller clusterIP: kb get svc --all-namespaces
+            "-consumers", "1",
             "-scope", "lil58",
-            "-stream", "benchmark3",
+            "-stream", "benchmark1",
             "-segments", "3",
             "-producers", "3",
             #"-events", "1000000",
-            "-time", "600",  # Number of seconds to run
+            "-time", "3600",  # Number of seconds to run
             "-size", "1000",
-            "-throughput", "5" # MiB/sec
+            "-throughput", "30" # MiB/sec
           ]
           env:
             - name: JAVA_OPTS
