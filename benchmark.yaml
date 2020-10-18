@@ -24,10 +24,10 @@ spec:
             "-consumers", "1",
             "-scope", "lil58",
             "-stream", "benchmark1",
-            "-segments", "3",
+            "-segments", "64",
             "-producers", "3",
             #"-events", "1000000",
-            "-time", "3600",  # Number of seconds to run
+            "-time", "43200",  # Number of seconds to run
             "-size", "1000",
             "-throughput", "30" # MiB/sec
           ]
