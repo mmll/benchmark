@@ -1,7 +1,7 @@
 kind: Job
 apiVersion: batch/v1
 metadata:
-  name: pravega-benchmark-throughput-30mb-12hours-monitoring
+  name: pravega-benchmark-test-large-test
 spec:
   parallelism: 1
   template:
@@ -10,9 +10,9 @@ spec:
       containers:
         - name: pravega-benchmark
           # You must set the image below to a valid value.
-          image: lemonieli/pravega-benchmark:0.6.0  # prefer to use your own image
+          image: devops-repo.isus.emc.com:8116/nautilus/pravega-benchmark:performance  # prefer to use your own image
           imagePullPolicy: IfNotPresent
-          resources: 
+          resources:
             limits:
               cpu: "4"
               memory: "4Gi"
@@ -21,17 +21,16 @@ spec:
               memory: "4Gi"
           args: [
             "-controller", "tcp://objectstore-pravega-pravega-controller:9090", # get controller clusterIP: kb get svc --all-namespaces
-            #"-consumers", "1",
-            "-scope", "TEST-SCOPE-NEW8",
-            "-stream", "perTest8",
-            #"-streamNum","128",
-            "-segments", "64",
+            "-consumers", "1",
+            "-scope", "TEST-NEW-SCOPE8",
+            "-stream", "benchmark8",
+            #"-streamNum","20",
+            "-segments", "32",
             "-producers", "1",
-            #"readDelay", "10",
             #"-events", "100",
             "-time", "43200",  # Number of seconds to run
             "-size", "1000",
-            "-throughput", "30" # MiB/sec
+            "-throughput", "60" # MiB/sec
           ]
           env:
             - name: JAVA_OPTS
